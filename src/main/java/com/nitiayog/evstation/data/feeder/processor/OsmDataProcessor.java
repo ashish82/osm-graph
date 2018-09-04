@@ -3,21 +3,14 @@ package com.nitiayog.evstation.data.feeder.processor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer;
 import org.openstreetmap.osmosis.core.container.v0_6.NodeContainer;
+import org.openstreetmap.osmosis.core.container.v0_6.RelationContainer;
 import org.openstreetmap.osmosis.core.container.v0_6.WayContainer;
-import org.openstreetmap.osmosis.core.domain.v0_6.Node;
-import org.openstreetmap.osmosis.core.domain.v0_6.Tag;
-import org.openstreetmap.osmosis.core.domain.v0_6.Way;
-import org.openstreetmap.osmosis.core.domain.v0_6.WayNode;
+import org.openstreetmap.osmosis.core.domain.v0_6.*;
 import org.openstreetmap.osmosis.core.task.v0_6.Sink;
 
 import com.google.gson.Gson;
@@ -40,7 +33,7 @@ public class OsmDataProcessor implements Sink {
 	public void process(EntityContainer entityContainer) {
 		if (entityContainer instanceof NodeContainer) {
 			Node node = ((NodeContainer) entityContainer).getEntity();
-			if (node != null)) {// && !node.toString().contains("ncdssdame"
+			if (node != null) {// && !node.toString().contains("ncdssdame"
 				//	if(GeoUtil.distance(AIIMS[0], AIIMS[1], node.getLatitude(), node.getLongitude(), 'K') <= 40){
 				vertexNodeIds.put(node.getId(),node);
 				System.out.println("Ploting vertex"+ node.getId());
@@ -94,7 +87,7 @@ public class OsmDataProcessor implements Sink {
 	}
 
 	public static Vertex addLocation(long id,String name, Double lat, Double lon, String locType,
-			Double trafficFactor, Double climateFactor, Double roadQualityFactor) {
+									 Double trafficFactor, Double climateFactor, Double roadQualityFactor) {
 		Vertex location = OrientDBConnection.getOianDBConnection().addVertex("class:Location");
 		location.setProperty("id",id);
 		location.setProperty("name", name);
